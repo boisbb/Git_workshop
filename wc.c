@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 int main(int argc, char const *argv[]) {
   FILE *f = fopen(argv[2], "r");
@@ -10,11 +11,14 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 
-  if (strcmp("-c", argv[1]) == 0) {
+  if (strcmp("-c", argv[1]) == 0 || strcmp("-w", argv[1])) {
     int i = 0;
     int c;
     while ((c = fgetc(f)) != EOF) {
-      i++;
+      if(strcmp("-w",argv[1]) == 0 && isspace(c))
+	    i++;
+      else if(strcmp("-c", argv[1]) == 0)
+	    i++;
     }
     printf("%d\n", i);
   }
